@@ -58,7 +58,7 @@ export function SelectForm() {
           </MuiPickersUtilsProvider>
         </CardContent>
         <CardActions>
-          <Button type="submit">Submit</Button>
+          <Button type="submit">Порахувати</Button>
         </CardActions>
       </Card>
     </form>
