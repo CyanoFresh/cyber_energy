@@ -1,4 +1,5 @@
 import { columnResponseIndexes } from '../config';
+import { directions, getDirection } from './functions';
 
 /**
  *
@@ -76,12 +77,27 @@ function mapData(data) {
   const result = {
     temperatureToDate: [],
     temperatureToHours: [],
+    directionToHours: [],
   };
 
   const tmpHours = {};
+  const directionHours = Object.keys(directions).reduce(
+    (acc, direction) => ({
+      ...acc,
+      [direction]: 0,
+    }),
+    {}
+  );
 
   data.forEach(row => {
     const temperature = +row[columnResponseIndexes.temperature];
+
+    result.temperatureToDate.push({
+      date:
+        row[columnResponseIndexes.date] + ' ' + row[columnResponseIndexes.time],
+      temperature,
+    });
+
     const temperatureInt = Math.round(temperature);
 
     if (tmpHours.hasOwnProperty(temperatureInt)) {
@@ -90,11 +106,8 @@ function mapData(data) {
       tmpHours[temperatureInt] = 1;
     }
 
-    result.temperatureToDate.push({
-      date:
-        row[columnResponseIndexes.date] + ' ' + row[columnResponseIndexes.time],
-      temperature,
-    });
+    const direction = getDirection(+row[columnResponseIndexes.windDirection]);
+    directionHours[direction]++;
   });
 
   for (const [temperature, hours] of Object.entries(tmpHours).sort(
@@ -102,6 +115,13 @@ function mapData(data) {
   )) {
     result.temperatureToHours.push({
       temperature,
+      hours,
+    });
+  }
+
+  for (const [direction, hours] of Object.entries(directionHours)) {
+    result.directionToHours.push({
+      direction,
       hours,
     });
   }

@@ -1,7 +1,7 @@
 export const getSheetIdFromUrl = url =>
   url.split('/').find((part, index, parts) => parts[index - 1] === 'd');
 
-const directions = {
+export const directions = {
   N: 0,
   NE: 45,
   E: 90,
@@ -13,14 +13,8 @@ const directions = {
 };
 
 export const getDirection = degree => {
-  degree %= 360;
+  const directionNames = Object.keys(directions);
+  const index = Math.round((degree % 360) / 45) % 8;
 
-  for (let [direction, directionDegree] of Object.entries(directions)) {
-    if (directionDegree < 22.5) {
-      directionDegree += 22.5;
-    }
-    if (degree >= directionDegree - 22.5 && degree < directionDegree + 22.5) {
-      return direction;
-    }
-  }
+  return directionNames[index];
 };

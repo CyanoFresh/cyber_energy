@@ -17,24 +17,6 @@ import {
 } from 'recharts';
 import React from 'react';
 
-const data2 = [
-  { temperature: 0, time: 100 },
-  { temperature: 1, time: 200 },
-  { temperature: 2, time: 300 },
-  { temperature: 3, time: 400 },
-  { temperature: 4, time: 500 },
-];
-
-const data3 = [
-  { direction: 'N', time: 60 },
-  { direction: 'NE', time: 20 },
-  { direction: 'E', time: 30 },
-  { direction: 'SE', time: 15 },
-  { direction: 'S', time: 30 },
-  { direction: 'SW', time: 60 },
-  { direction: 'W', time: 130 },
-  { direction: 'NW', time: 100 },
-];
 const data4 = [
   { temperature: 0, time: 100 },
   { temperature: 1, time: 200 },
@@ -78,19 +60,17 @@ export function Tab1({ data }) {
           <XAxis dataKey="temperature" />
           <YAxis />
           <Tooltip />
-          <Legend />
           <Bar dataKey="hours" fill="#8884d8" />
         </BarChart>
       </ResponsiveContainer>
 
       <ResponsiveContainer width="100%" height={300}>
-        <RadarChart data={data3}>
+        <RadarChart data={data.directionToHours || []}>
           <PolarGrid />
           <PolarAngleAxis dataKey="direction" />
           <PolarRadiusAxis />
           <Radar
-            name="Mike"
-            dataKey="time"
+            dataKey="hours"
             stroke="#8884d8"
             fill="#8884d8"
             fillOpacity={0.6}
