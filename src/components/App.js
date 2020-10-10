@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -14,6 +14,7 @@ const useStyles = makeStyles(theme => ({
 
 function App() {
   const classes = useStyles();
+  const [data, setData] = useState([]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -25,9 +26,9 @@ function App() {
         <div className={classes.toolbar} />
 
         <Container maxWidth="md">
-          <SelectForm />
+          <SelectForm setData={setData} />
 
-          <TabPanels />
+          <TabPanels data={data} />
         </Container>
       </main>
     </ThemeProvider>

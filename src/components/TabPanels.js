@@ -19,7 +19,7 @@ function TabPanel({ children, value, index, ...other }) {
   );
 }
 
-export function TabPanels() {
+export function TabPanels({ data }) {
   const [value, setValue] = useState(0);
 
   const onChange = (event, newValue) => setValue(newValue);
@@ -39,7 +39,7 @@ export function TabPanels() {
       </Tabs>
 
       <TabPanel value={value} index={0}>
-        <Tab1 />
+        <Tab1 data={data} />
       </TabPanel>
       <TabPanel value={value} index={1}>
         Tab Two

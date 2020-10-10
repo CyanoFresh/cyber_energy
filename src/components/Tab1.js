@@ -17,13 +17,6 @@ import {
 } from 'recharts';
 import React from 'react';
 
-const data1 = [
-  { temperature: 0, date: new Date().toLocaleTimeString() },
-  { temperature: -1, date: new Date().toLocaleTimeString() },
-  { temperature: -20, date: new Date().toLocaleTimeString() },
-  { temperature: 15, date: new Date().toLocaleTimeString() },
-];
-
 const data2 = [
   { temperature: 0, time: 100 },
   { temperature: 1, time: 200 },
@@ -66,33 +59,27 @@ const data6 = [
   { temperature: 4, time: 500 },
 ];
 
-export function Tab1() {
+export function Tab1({ data }) {
   return (
     <>
-      <ResponsiveContainer width="100%" height={300}>
-        <LineChart data={data1}>
+      <ResponsiveContainer width="100%" height={400}>
+        <LineChart data={data.temperatureToDate}>
           <XAxis dataKey="date" />
-          <YAxis />
+          <YAxis type="number" domain={['dataMin - 5', 'dataMax + 5']} />
           <CartesianGrid strokeDasharray="3 3" />
           <Tooltip />
-          <Legend />
-          <Line type="monotone" dataKey="temperature" stroke="#82ca9d" />
+          <Line dataKey="temperature" stroke="#82ca9d" dot={false} />
         </LineChart>
       </ResponsiveContainer>
 
       <ResponsiveContainer width="100%" height={300}>
-        <BarChart
-          width={600}
-          height={300}
-          data={data2}
-          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-        >
+        <BarChart data={data.temperatureToHours}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="temperature" />
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="time" fill="#8884d8" />
+          <Bar dataKey="hours" fill="#8884d8" />
         </BarChart>
       </ResponsiveContainer>
 
