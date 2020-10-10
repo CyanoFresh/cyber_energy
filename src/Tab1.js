@@ -13,6 +13,7 @@ import {
   Tooltip,
   XAxis,
   YAxis,
+  ResponsiveContainer,
 } from 'recharts';
 import React from 'react';
 
@@ -68,95 +69,102 @@ const data6 = [
 export function Tab1() {
   return (
     <>
-      <LineChart
-        width={600}
-        height={300}
-        data={data1}
-        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-      >
-        <XAxis dataKey="date" />
-        <YAxis />
-        <CartesianGrid strokeDasharray="3 3" />
-        <Tooltip />
-        <Legend />
-        <Line type="monotone" dataKey="temperature" stroke="#82ca9d" />
-      </LineChart>
+      <ResponsiveContainer width="100%" height={300}>
+        <LineChart data={data1}>
+          <XAxis dataKey="date" />
+          <YAxis />
+          <CartesianGrid strokeDasharray="3 3" />
+          <Tooltip />
+          <Legend />
+          <Line type="monotone" dataKey="temperature" stroke="#82ca9d" />
+        </LineChart>
+      </ResponsiveContainer>
 
-      <BarChart
-        width={600}
-        height={300}
-        data={data2}
-        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="temperature" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Bar dataKey="time" fill="#8884d8" />
-      </BarChart>
+      <ResponsiveContainer width="100%" height={300}>
+        <BarChart
+          width={600}
+          height={300}
+          data={data2}
+          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="temperature" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="time" fill="#8884d8" />
+        </BarChart>
+      </ResponsiveContainer>
 
-      <RadarChart
-        cx={300}
-        cy={250}
-        outerRadius={150}
-        width={600}
-        height={500}
-        data={data3}
-      >
-        <PolarGrid />
-        <PolarAngleAxis dataKey="direction" />
-        <PolarRadiusAxis />
-        <Radar
-          name="Mike"
-          dataKey="time"
-          stroke="#8884d8"
-          fill="#8884d8"
-          fillOpacity={0.6}
-        />
-      </RadarChart>
+      <ResponsiveContainer width="100%" height={500}>
+        <RadarChart
+          cx={300}
+          cy={250}
+          outerRadius={150}
+          width={600}
+          height={500}
+          data={data3}
+        >
+          <PolarGrid />
+          <PolarAngleAxis dataKey="direction" />
+          <PolarRadiusAxis />
+          <Radar
+            name="Mike"
+            dataKey="time"
+            stroke="#8884d8"
+            fill="#8884d8"
+            fillOpacity={0.6}
+          />
+        </RadarChart>
+      </ResponsiveContainer>
 
-      <BarChart
-        width={600}
-        height={300}
-        data={data4}
-        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="temperature" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Bar dataKey="time" fill="#8884d8" />
-      </BarChart>
+      <ResponsiveContainer width="100%" height={300}>
+        <BarChart
+          width={600}
+          height={300}
+          data={data4}
+          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="temperature" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="time" fill="#8884d8" />
+        </BarChart>
+      </ResponsiveContainer>
 
-      <BarChart
-        width={600}
-        height={300}
-        data={data5}
-        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="temperature" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Bar dataKey="time" fill="#8884d8" />
-      </BarChart>
+      <ResponsiveContainer width="100%" height={300}>
+        <BarChart
+          width={600}
+          height={300}
+          data={data5}
+          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="temperature" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="time" fill="#8884d8" />
+        </BarChart>
+      </ResponsiveContainer>
 
-      <BarChart
-        width={600}
-        height={300}
-        data={data6}
-        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="temperature" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Bar dataKey="time" fill="#8884d8" />
-      </BarChart>
+      <ResponsiveContainer width="100%" height={300}>
+        <BarChart
+          width={600}
+          height={300}
+          data={data6}
+          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="temperature" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="time" fill="#8884d8" />
+        </BarChart>
+      </ResponsiveContainer>
     </>
   );
 }
