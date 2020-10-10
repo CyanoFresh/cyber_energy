@@ -96,15 +96,8 @@ export function Tab1() {
         </BarChart>
       </ResponsiveContainer>
 
-      <ResponsiveContainer width="100%" height={500}>
-        <RadarChart
-          cx={300}
-          cy={250}
-          outerRadius={150}
-          width={600}
-          height={500}
-          data={data3}
-        >
+      <ResponsiveContainer width="100%" height={300}>
+        <RadarChart data={data3}>
           <PolarGrid />
           <PolarAngleAxis dataKey="direction" />
           <PolarRadiusAxis />
@@ -119,12 +112,7 @@ export function Tab1() {
       </ResponsiveContainer>
 
       <ResponsiveContainer width="100%" height={300}>
-        <BarChart
-          width={600}
-          height={300}
-          data={data4}
-          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-        >
+        <BarChart data={data4}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="temperature" />
           <YAxis />
@@ -135,12 +123,7 @@ export function Tab1() {
       </ResponsiveContainer>
 
       <ResponsiveContainer width="100%" height={300}>
-        <BarChart
-          width={600}
-          height={300}
-          data={data5}
-          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-        >
+        <BarChart data={data5}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="temperature" />
           <YAxis />
@@ -151,12 +134,7 @@ export function Tab1() {
       </ResponsiveContainer>
 
       <ResponsiveContainer width="100%" height={300}>
-        <BarChart
-          width={600}
-          height={300}
-          data={data6}
-          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-        >
+        <BarChart data={data6}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="temperature" />
           <YAxis />
