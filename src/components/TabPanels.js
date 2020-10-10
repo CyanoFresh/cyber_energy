@@ -26,7 +26,12 @@ export function TabPanels() {
 
   return (
     <Paper>
-      <Tabs centered value={value} onChange={onChange}>
+      <Tabs
+        value={value}
+        onChange={onChange}
+        scrollButtons="auto"
+        variant="scrollable"
+      >
         <Tab label="Вкладка 1" />
         <Tab label="Вкладка 2" />
         <Tab label="Вкладка 3" />

@@ -4,7 +4,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { TopMenu } from './TopMenu';
-import { theme } from './theme';
+import { theme } from '../theme';
 import { SelectForm } from './SelectForm';
 import { TabPanels } from './TabPanels';
 
