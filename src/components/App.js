@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -7,6 +7,7 @@ import { TopMenu } from './TopMenu';
 import { theme } from '../theme';
 import { SelectForm } from './SelectForm';
 import { TabPanels } from './TabPanels';
+import DataProvider from './dataContext';
 
 const useStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar,
@@ -14,7 +15,6 @@ const useStyles = makeStyles(theme => ({
 
 function App() {
   const classes = useStyles();
-  const [data, setData] = useState([]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -26,9 +26,11 @@ function App() {
         <div className={classes.toolbar} />
 
         <Container maxWidth="md">
-          <SelectForm setData={setData} />
+          <DataProvider>
+            <SelectForm />
 
-          <TabPanels data={data} />
+            <TabPanels />
+          </DataProvider>
         </Container>
       </main>
     </ThemeProvider>

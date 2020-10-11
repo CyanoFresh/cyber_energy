@@ -78,9 +78,14 @@ function mapData(data) {
     temperatureToDate: [],
     temperatureToHours: [],
     directionToHours: [],
+    speedToHours: [],
+    solarToDate: [],
+    wattToHours: [],
   };
 
   const tmpHours = {};
+  const speedHours = {};
+  const wattHours = {};
   const directionHours = Object.keys(directions).reduce(
     (acc, direction) => ({
       ...acc,
@@ -108,6 +113,30 @@ function mapData(data) {
 
     const direction = getDirection(+row[columnResponseIndexes.windDirection]);
     directionHours[direction]++;
+
+    const speed = Math.round(+row[columnResponseIndexes.windSpeed]);
+
+    if (speedHours.hasOwnProperty(speed)) {
+      speedHours[speed]++;
+    } else {
+      speedHours[speed] = 1;
+    }
+
+    const solar = +row[columnResponseIndexes.solar];
+
+    result.solarToDate.push({
+      date:
+        row[columnResponseIndexes.date] + ' ' + row[columnResponseIndexes.time],
+      solar,
+    });
+
+    if (solar !== 0) {
+      if (wattHours.hasOwnProperty(solar)) {
+        wattHours[solar]++;
+      } else {
+        wattHours[solar] = 1;
+      }
+    }
   });
 
   for (const [temperature, hours] of Object.entries(tmpHours).sort(
@@ -122,6 +151,24 @@ function mapData(data) {
   for (const [direction, hours] of Object.entries(directionHours)) {
     result.directionToHours.push({
       direction,
+      hours,
+    });
+  }
+
+  for (const [speed, hours] of Object.entries(speedHours).sort(
+    (a, b) => a[0] - b[0]
+  )) {
+    result.speedToHours.push({
+      speed,
+      hours,
+    });
+  }
+
+  for (const [watt, hours] of Object.entries(wattHours).sort(
+    (a, b) => a[0] - b[0]
+  )) {
+    result.wattToHours.push({
+      watt,
       hours,
     });
   }

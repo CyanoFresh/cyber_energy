@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { Tab1 } from './Tab1';
 import Box from '@material-ui/core/Box';
+import { DataContext } from './dataContext';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Alert from '@material-ui/lab/Alert';
 
 function TabPanel({ children, value, index, ...other }) {
   return (
@@ -19,10 +22,27 @@ function TabPanel({ children, value, index, ...other }) {
   );
 }
 
-export function TabPanels({ data }) {
+export function TabPanels() {
   const [value, setValue] = useState(0);
+  const { loading, error, data } = useContext(DataContext);
 
   const onChange = (event, newValue) => setValue(newValue);
+
+  if (loading) {
+    return <CircularProgress />;
+  }
+
+  if (error) {
+    return (
+      <Alert severity="error">
+        Неможливо завантажити дані. Спробуйте ще раз
+      </Alert>
+    );
+  }
+
+  if (!data.temperatureToDate?.length) {
+    return null;
+  }
 
   return (
     <Paper>
@@ -39,7 +59,7 @@ export function TabPanels({ data }) {
       </Tabs>
 
       <TabPanel value={value} index={0}>
-        <Tab1 data={data} />
+        <Tab1 />
       </TabPanel>
       <TabPanel value={value} index={1}>
         Tab Two

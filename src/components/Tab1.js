@@ -15,35 +15,19 @@ import {
   YAxis,
   ResponsiveContainer,
 } from 'recharts';
-import React from 'react';
+import React, { useContext } from 'react';
+import Typography from '@material-ui/core/Typography';
+import { DataContext } from './dataContext';
 
-const data4 = [
-  { temperature: 0, time: 100 },
-  { temperature: 1, time: 200 },
-  { temperature: 2, time: 300 },
-  { temperature: 3, time: 400 },
-  { temperature: 4, time: 500 },
-];
+export function Tab1() {
+  const { data } = useContext(DataContext);
 
-const data5 = [
-  { temperature: 0, time: 100 },
-  { temperature: 1, time: 200 },
-  { temperature: 2, time: 300 },
-  { temperature: 3, time: 400 },
-  { temperature: 4, time: 500 },
-];
-
-const data6 = [
-  { temperature: 0, time: 100 },
-  { temperature: 1, time: 200 },
-  { temperature: 2, time: 300 },
-  { temperature: 3, time: 400 },
-  { temperature: 4, time: 500 },
-];
-
-export function Tab1({ data }) {
   return (
     <>
+      <Typography variant="h6" gutterBottom>
+        Температурні умови
+      </Typography>
+
       <ResponsiveContainer width="100%" height={400}>
         <LineChart data={data.temperatureToDate}>
           <XAxis dataKey="date" />
@@ -55,6 +39,10 @@ export function Tab1({ data }) {
         </LineChart>
       </ResponsiveContainer>
 
+      <Typography variant="h6" gutterBottom>
+        Тривалість температурних режимів
+      </Typography>
+
       <ResponsiveContainer width="100%" height={300}>
         <BarChart data={data.temperatureToHours}>
           <CartesianGrid strokeDasharray="3 3" />
@@ -65,6 +53,10 @@ export function Tab1({ data }) {
           <Bar dataKey="hours" fill="#8884d8" />
         </BarChart>
       </ResponsiveContainer>
+
+      <Typography variant="h6" gutterBottom>
+        Троянда вітрів
+      </Typography>
 
       <ResponsiveContainer width="100%" height={300}>
         <RadarChart data={data.directionToHours || []}>
@@ -80,36 +72,48 @@ export function Tab1({ data }) {
         </RadarChart>
       </ResponsiveContainer>
 
+      <Typography variant="h6" gutterBottom>
+        Тривалість режимів вітрової активності
+      </Typography>
+
       <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={data4}>
+        <BarChart data={data.speedToHours}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="temperature" />
+          <XAxis dataKey="speed" unit="m/s" />
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="time" fill="#8884d8" />
+          <Bar dataKey="hours" fill="#8884d8" />
         </BarChart>
       </ResponsiveContainer>
 
+      <Typography variant="h6" gutterBottom>
+        Інтенсивність сонячної інсоляції
+      </Typography>
+
       <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={data5}>
+        <BarChart data={data.solarToDate}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="temperature" />
-          <YAxis />
+          <XAxis dataKey="date" />
+          <YAxis unit="W/m2" />
           <Tooltip />
           <Legend />
-          <Bar dataKey="time" fill="#8884d8" />
+          <Bar dataKey="solar" fill="#8884d8" />
         </BarChart>
       </ResponsiveContainer>
 
+      <Typography variant="h6" gutterBottom>
+        Тривалість режимів сонячної активності
+      </Typography>
+
       <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={data6}>
+        <BarChart data={data.wattToHours}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="temperature" />
+          <XAxis dataKey="watt" />
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="time" fill="#8884d8" />
+          <Bar dataKey="hours" fill="#8884d8" />
         </BarChart>
       </ResponsiveContainer>
     </>
