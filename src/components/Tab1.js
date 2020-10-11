@@ -50,16 +50,18 @@ export function Tab1({ data }) {
           <YAxis type="number" domain={['dataMin - 5', 'dataMax + 5']} />
           <CartesianGrid strokeDasharray="3 3" />
           <Tooltip />
-          <Line dataKey="temperature" stroke="#82ca9d" dot={false} />
+          <Legend />
+          <Line dataKey="temperature" stroke="#82ca9d" dot={false} unit="°C" />
         </LineChart>
       </ResponsiveContainer>
 
       <ResponsiveContainer width="100%" height={300}>
         <BarChart data={data.temperatureToHours}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="temperature" />
+          <XAxis dataKey="temperature" unit="°C" />
           <YAxis />
           <Tooltip />
+          <Legend />
           <Bar dataKey="hours" fill="#8884d8" />
         </BarChart>
       </ResponsiveContainer>
