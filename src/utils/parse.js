@@ -2,7 +2,6 @@ import { columnResponseIndexes } from '../config';
 import { directions, getDirection } from './functions';
 
 /**
- *
  * @param {{}} data
  * @param {Date} dateFrom
  * @param {Date} dateTo
@@ -176,9 +175,5 @@ function mapData(data) {
   return result;
 }
 
-export const parseData = (data, dateFrom, dateTo) => {
-  const data1 = filterData(data, dateFrom, dateTo);
-  const data2 = flattenData(data1);
-
-  return mapData(data2);
-};
+export const parseData = (data, dateFrom, dateTo) =>
+  mapData(flattenData(filterData(data, dateFrom, dateTo)));
