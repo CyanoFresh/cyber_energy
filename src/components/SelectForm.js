@@ -27,24 +27,32 @@ export function SelectForm() {
   const [dateFrom, setDateFrom] = useState(new Date('2014-01-01T21:11:54'));
   const [dateTo, setDateTo] = useState(new Date('2014-01-01T21:11:54'));
   const [url, setUrl] = useState('');
-  const { setData, loading, setLoading } = useContext(DataContext);
+  const { setData, loading, setLoading, setError } = useContext(DataContext);
 
   useEffect(() => {
     const load = async sheetId => {
       setLoading(true);
+      setError(false);
 
-      const sheetResponse = await fetch(`${API_URL}/${sheetId}?key=${API_KEY}`);
-      const sheetData = await sheetResponse.json();
-      const sheet = sheetData.sheets[0].properties.title;
+      try {
+        const sheetResponse = await fetch(
+          `${API_URL}/${sheetId}?key=${API_KEY}`
+        );
+        const sheetData = await sheetResponse.json();
+        const sheet = sheetData.sheets[0].properties.title;
 
-      const dataResponse = await fetch(
-        `${API_URL}/${sheetId}/values:batchGet?key=${API_KEY}&ranges=${sheet}!A3:B&ranges=${sheet}!E3:E&ranges=${sheet}!AF3:AF&ranges=${sheet}!AR3:AR&ranges=${sheet}!AU3:AU`
-      );
-      const data = await dataResponse.json();
-      const parsedData = parseData(data, dateFrom, dateTo);
+        const dataResponse = await fetch(
+          `${API_URL}/${sheetId}/values:batchGet?key=${API_KEY}&ranges=${sheet}!A3:B&ranges=${sheet}!E3:E&ranges=${sheet}!AF3:AF&ranges=${sheet}!AR3:AR&ranges=${sheet}!AU3:AU`
+        );
+        const data = await dataResponse.json();
+        const parsedData = parseData(data, dateFrom, dateTo);
 
-      setData(parsedData);
-      setLoading(false);
+        setData(parsedData);
+        setLoading(false);
+      } catch (e) {
+        setError(e);
+        setLoading(false);
+      }
     };
 
     const sheetId = getSheetIdFromUrl(url);
@@ -52,7 +60,7 @@ export function SelectForm() {
     if (sheetId) {
       load(sheetId);
     }
-  }, [dateFrom, dateTo, setData, setLoading, url]);
+  }, [dateFrom, dateTo, setData, setLoading, setError, url]);
 
   const handleDateFromChange = date => setDateFrom(date);
   const handleDateToChange = date => setDateTo(date);
