@@ -3,7 +3,7 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="0e90a4ba-3bf3-4384-8099-5d9a6c8a3fe6" name="alikosin_ftp" url="http://alikosin.ftp.tools">
-        <fileTransfer rootFolder="/solomaha.com/energy" host="alikosin.ftp.tools" port="21">
+        <fileTransfer rootFolder="/solomaha.com/energy" accessType="FTPS" host="alikosin.ftp.tools" port="21">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>

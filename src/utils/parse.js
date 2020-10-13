@@ -85,7 +85,7 @@ function mapData(data) {
   const tmpHours = {};
   const speedHours = {};
   const wattHours = {};
-  const directionHours = Object.keys(directions).reduce(
+  const directionHours = directions.reduce(
     (acc, direction) => ({
       ...acc,
       [direction]: 0,
