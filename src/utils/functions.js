@@ -6,20 +6,7 @@ export const getSheetIdFromUrl = url =>
 export const buildRangesUrl = sheet =>
   loadRanges.reduce((str, range) => `${str}&ranges=${sheet}!${range}`, '');
 
-export const directions = {
-  N: 0,
-  NE: 45,
-  E: 90,
-  SE: 135,
-  S: 180,
-  SW: 225,
-  W: 270,
-  NW: 315,
-};
+export const directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
 
-export const getDirection = degree => {
-  const directionNames = Object.keys(directions);
-  const index = Math.round((degree % 360) / 45) % 8;
-
-  return directionNames[index];
-};
+export const getDirection = degree =>
+  directions[Math.round((degree % 360) / 45) % 8];
