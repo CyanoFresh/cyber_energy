@@ -12,7 +12,7 @@
       <paths name="alikosin_ftp">
         <serverdata>
           <mappings>
-            <mapping deploy="/" local="$PROJECT_DIR$/build" web="/" />
+            <mapping local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>

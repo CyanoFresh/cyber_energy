@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import TextField from '@material-ui/core/TextField';
 import {
   KeyboardDatePicker,
@@ -11,7 +11,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import { API_KEY, API_URL } from '../config';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { getSheetIdFromUrl } from '../utils/functions';
+import { buildRangesUrl, getSheetIdFromUrl } from '../utils/functions';
 import { parseData } from '../utils/parse';
 import { DataContext } from './dataContext';
 import FormControl from '@material-ui/core/FormControl';
@@ -24,50 +24,43 @@ const useStyles = makeStyles(theme => ({
 
 export function SelectForm() {
   const classes = useStyles();
-  const [dateFrom, setDateFrom] = useState(new Date('2014-01-01T21:11:54'));
-  const [dateTo, setDateTo] = useState(new Date('2014-01-01T21:11:54'));
-  const [url, setUrl] = useState('');
+  const [dateFrom, setDateFrom] = useState(new Date('1980-01-01T00:00:00'));
+  const [dateTo, setDateTo] = useState(new Date('1980-01-07T00:00:00'));
   const { setData, loading, setLoading, setError } = useContext(DataContext);
 
-  useEffect(() => {
-    const load = async sheetId => {
-      setLoading(true);
-      setError(false);
+  const onSubmit = async e => {
+    e.preventDefault();
 
-      try {
-        const sheetResponse = await fetch(
-          `${API_URL}/${sheetId}?key=${API_KEY}`
-        );
-        const sheetData = await sheetResponse.json();
-        const sheet = sheetData.sheets[0].properties.title;
-
-        const dataResponse = await fetch(
-          `${API_URL}/${sheetId}/values:batchGet?key=${API_KEY}&ranges=${sheet}!A3:B&ranges=${sheet}!E3:E&ranges=${sheet}!AF3:AF&ranges=${sheet}!AR3:AR&ranges=${sheet}!AU3:AU`
-        );
-        const data = await dataResponse.json();
-        const parsedData = parseData(data, dateFrom, dateTo);
-
-        setData(parsedData);
-        setLoading(false);
-      } catch (e) {
-        setError(e);
-        setLoading(false);
-      }
-    };
-
+    const url = e.target.url.value;
     const sheetId = getSheetIdFromUrl(url);
 
-    if (sheetId) {
-      load(sheetId);
+    if (!sheetId) return setError('Неправильне посилання');
+
+    setLoading(true);
+    setError(false);
+
+    try {
+      const sheetResponse = await fetch(`${API_URL}/${sheetId}?key=${API_KEY}`);
+      const sheetData = await sheetResponse.json();
+
+      if (sheetData.error) throw new Error('Файл не знайдено');
+
+      const sheet = sheetData.sheets[0].properties.title;
+
+      const dataResponse = await fetch(
+        `${API_URL}/${sheetId}/values:batchGet?key=${API_KEY}${buildRangesUrl(
+          sheet
+        )}`
+      );
+      const data = await dataResponse.json();
+      const parsedData = parseData(data, dateFrom, dateTo);
+
+      setData(parsedData);
+      setLoading(false);
+    } catch (e) {
+      setError('Неможливо завантажити дані: ' + e);
+      setLoading(false);
     }
-  }, [dateFrom, dateTo, setData, setLoading, setError, url]);
-
-  const handleDateFromChange = date => setDateFrom(date);
-  const handleDateToChange = date => setDateTo(date);
-
-  const onSubmit = e => {
-    e.preventDefault();
-    setUrl(e.target.url.value);
   };
 
   return (
@@ -77,6 +70,7 @@ export function SelectForm() {
           <Typography variant="h5" component="h2">
             Введіть дані:
           </Typography>
+
           <TextField
             required
             name="url"
@@ -86,41 +80,36 @@ export function SelectForm() {
             margin="normal"
             fullWidth
           />
-          <Grid container spacing={3}>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <Grid container spacing={3}>
               <Grid item xs={6}>
                 <KeyboardDatePicker
+                  autoOk
+                  format="dd.MM"
                   margin="normal"
-                  views={['month', 'date']}
-                  id="date-from"
                   label="Дата початку"
                   inputVariant="outlined"
-                  format="MM.dd"
                   value={dateFrom}
-                  onChange={handleDateFromChange}
-                  KeyboardButtonProps={{
-                    'aria-label': 'change date',
-                  }}
+                  onChange={setDateFrom}
                   fullWidth
                 />
               </Grid>
               <Grid item xs={6}>
                 <KeyboardDatePicker
+                  autoOk
+                  format="dd.MM"
                   margin="normal"
-                  id="date-to"
                   label="Дата кінця"
-                  format="MM.dd"
                   inputVariant="outlined"
+                  minDate={dateFrom}
                   value={dateTo}
-                  onChange={handleDateToChange}
-                  KeyboardButtonProps={{
-                    'aria-label': 'change date',
-                  }}
+                  onChange={setDateTo}
                   fullWidth
                 />
               </Grid>
-            </MuiPickersUtilsProvider>
-          </Grid>
+            </Grid>
+          </MuiPickersUtilsProvider>
 
           <FormControl>
             <Button

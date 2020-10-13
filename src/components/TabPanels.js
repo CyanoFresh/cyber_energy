@@ -33,11 +33,7 @@ export function TabPanels() {
   }
 
   if (error) {
-    return (
-      <Alert severity="error">
-        Неможливо завантажити дані. Спробуйте ще раз
-      </Alert>
-    );
+    return <Alert severity="error">{error}</Alert>;
   }
 
   if (!data.temperatureToDate?.length) {
