@@ -43,7 +43,9 @@ export function SelectForm() {
       const sheetResponse = await fetch(`${API_URL}/${sheetId}?key=${API_KEY}`);
       const sheetData = await sheetResponse.json();
 
-      if (sheetData.error) throw new Error('Файл не знайдено');
+      if (sheetData.error) {
+        return setError('Файл не знайдено');
+      }
 
       const sheet = sheetData.sheets[0].properties.title;
 
@@ -53,7 +55,12 @@ export function SelectForm() {
         )}`
       );
       const data = await dataResponse.json();
+
+      const t0 = performance.now();
       const parsedData = parseData(data, dateFrom, dateTo);
+      const t1 = performance.now();
+
+      console.log('Calculations took ' + (t1 - t0) + ' milliseconds.');
 
       setData(parsedData);
       setLoading(false);

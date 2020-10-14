@@ -22,7 +22,6 @@ function filterData(data, dateFrom, dateTo) {
       day >= dateFrom.getDate() &&
       day <= dateTo.getDate();
 
-    // debugger;
     if (inRange) {
       matchedIndexes.push(rowIndex);
     }
@@ -72,15 +71,22 @@ function flattenData(data) {
   return result;
 }
 
+const hoursToArray = (obj, sort = false, name) => {
+  let entries = Object.entries(obj);
+
+  if (sort) {
+    entries = entries.sort((a, b) => a[0] - b[0]);
+  }
+
+  return entries.map(([key, value]) => ({
+    [name]: key,
+    hours: value,
+  }));
+};
+
 function mapData(data) {
-  const result = {
-    temperatureToDate: [],
-    temperatureToHours: [],
-    directionToHours: [],
-    speedToHours: [],
-    solarToDate: [],
-    wattToHours: [],
-  };
+  const temperatureToDate = [],
+    solarToDate = [];
 
   const tmpHours = {};
   const speedHours = {};
@@ -95,10 +101,11 @@ function mapData(data) {
 
   data.forEach(row => {
     const temperature = +row[columnResponseIndexes.temperature];
+    const date =
+      row[columnResponseIndexes.date] + ' ' + row[columnResponseIndexes.time];
 
-    result.temperatureToDate.push({
-      date:
-        row[columnResponseIndexes.date] + ' ' + row[columnResponseIndexes.time],
+    temperatureToDate.push({
+      date,
       temperature,
     });
 
@@ -123,13 +130,12 @@ function mapData(data) {
 
     const solar = +row[columnResponseIndexes.solar];
 
-    result.solarToDate.push({
-      date:
-        row[columnResponseIndexes.date] + ' ' + row[columnResponseIndexes.time],
-      solar,
-    });
-
     if (solar !== 0) {
+      solarToDate.push({
+        date,
+        solar,
+      });
+
       if (wattHours.hasOwnProperty(solar)) {
         wattHours[solar]++;
       } else {
@@ -138,41 +144,14 @@ function mapData(data) {
     }
   });
 
-  for (const [temperature, hours] of Object.entries(tmpHours).sort(
-    (a, b) => a[0] - b[0]
-  )) {
-    result.temperatureToHours.push({
-      temperature,
-      hours,
-    });
-  }
-
-  for (const [direction, hours] of Object.entries(directionHours)) {
-    result.directionToHours.push({
-      direction,
-      hours,
-    });
-  }
-
-  for (const [speed, hours] of Object.entries(speedHours).sort(
-    (a, b) => a[0] - b[0]
-  )) {
-    result.speedToHours.push({
-      speed,
-      hours,
-    });
-  }
-
-  for (const [watt, hours] of Object.entries(wattHours).sort(
-    (a, b) => a[0] - b[0]
-  )) {
-    result.wattToHours.push({
-      watt,
-      hours,
-    });
-  }
-
-  return result;
+  return {
+    temperatureToDate,
+    solarToDate,
+    temperatureToHours: hoursToArray(tmpHours, true, 'temperature'),
+    directionToHours: hoursToArray(directionHours, false, 'direction'),
+    speedToHours: hoursToArray(speedHours, true, 'speed'),
+    wattToHours: hoursToArray(wattHours, true, 'watt'),
+  };
 }
 
 export const parseData = (data, dateFrom, dateTo) =>
