@@ -5,11 +5,6 @@ import {
   Legend,
   Line,
   LineChart,
-  PolarAngleAxis,
-  PolarGrid,
-  PolarRadiusAxis,
-  Radar,
-  RadarChart,
   Tooltip,
   XAxis,
   YAxis,
@@ -18,6 +13,7 @@ import {
 import React, { useContext } from 'react';
 import Typography from '@material-ui/core/Typography';
 import { DataContext } from './dataContext';
+import WindRose from './WindRose';
 
 export function Tab1() {
   const { data } = useContext(DataContext);
@@ -57,21 +53,11 @@ export function Tab1() {
       <Typography variant="h6" gutterBottom>
         Троянда вітрів
       </Typography>
-
-      <ResponsiveContainer width="100%" height={300}>
-        <RadarChart data={data.directionToHours || []}>
-          <PolarGrid />
-          <PolarAngleAxis dataKey="direction" />
-          <PolarRadiusAxis />
-          <Radar
-            dataKey="hours"
-            stroke="#8884d8"
-            fill="#8884d8"
-            fillOpacity={0.6}
-          />
-        </RadarChart>
+      <ResponsiveContainer width="100%" height={500}>
+        <WindRose data={data.windRose} />
       </ResponsiveContainer>
-
+      <strong>Штиль:</strong>{' '}
+      {data.windStats.calm + ' ' + data.windStats.calmPercent + '%'}
       <Typography variant="h6" gutterBottom>
         Тривалість режимів вітрової активності
       </Typography>

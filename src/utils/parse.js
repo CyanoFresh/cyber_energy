@@ -1,5 +1,5 @@
-import { columnResponseIndexes } from '../config';
-import { directions, getDirection } from './functions';
+import { columnIndexes } from '../config';
+import { calculateWindRose } from './windRose';
 
 /**
  * @param {{}} data
@@ -85,24 +85,24 @@ const hoursToArray = (obj, sort = false, name) => {
 };
 
 function mapData(data) {
-  const temperatureToDate = [],
-    solarToDate = [];
+  const temperatureToDate = [];
+  const solarToDate = [];
+  const windRose = {
+    direction: [],
+    speed: [],
+  };
+  const windStats = {
+    calm: 0,
+    calmPercent: 100,
+  };
 
   const tmpHours = {};
   const speedHours = {};
   const wattHours = {};
-  const directionHours = directions.reduce(
-    (acc, direction) => ({
-      ...acc,
-      [direction]: 0,
-    }),
-    {}
-  );
 
   data.forEach(row => {
-    const temperature = +row[columnResponseIndexes.temperature];
-    const date =
-      row[columnResponseIndexes.date] + ' ' + row[columnResponseIndexes.time];
+    const temperature = +row[columnIndexes.temperature];
+    const date = row[columnIndexes.date] + ' ' + row[columnIndexes.time];
 
     temperatureToDate.push({
       date,
@@ -117,10 +117,14 @@ function mapData(data) {
       tmpHours[temperatureInt] = 1;
     }
 
-    const direction = getDirection(+row[columnResponseIndexes.windDirection]);
-    directionHours[direction]++;
+    const speed = Math.round(row[columnIndexes.windSpeed]);
 
-    const speed = Math.round(+row[columnResponseIndexes.windSpeed]);
+    windRose.direction.push(+row[columnIndexes.windDirection]);
+    windRose.speed.push(speed);
+
+    if (speed === 0) {
+      windStats.calm++;
+    }
 
     if (speedHours.hasOwnProperty(speed)) {
       speedHours[speed]++;
@@ -128,7 +132,7 @@ function mapData(data) {
       speedHours[speed] = 1;
     }
 
-    const solar = +row[columnResponseIndexes.solar];
+    const solar = +row[columnIndexes.solar];
 
     if (solar !== 0) {
       solarToDate.push({
@@ -144,11 +148,14 @@ function mapData(data) {
     }
   });
 
+  windStats.calmPercent = Math.round((windStats.calm / data.length) * 100);
+
   return {
     temperatureToDate,
     solarToDate,
+    windStats,
+    windRose: calculateWindRose(windRose),
     temperatureToHours: hoursToArray(tmpHours, true, 'temperature'),
-    directionToHours: hoursToArray(directionHours, false, 'direction'),
     speedToHours: hoursToArray(speedHours, true, 'speed'),
     wattToHours: hoursToArray(wattHours, true, 'watt'),
   };
