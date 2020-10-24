@@ -78,51 +78,49 @@ export function SelectForm() {
     <form onSubmit={onSubmit}>
       <Card className={classes.root}>
         <CardContent>
-          <Typography variant="h5" component="h2">
+          <Typography variant="h5" component="h2" gutterBottom>
             Введіть дані:
           </Typography>
 
-          <Grid container spacing={3}>
-            <Grid item xs={6}>
-              <TextField
-                required
-                name="url"
-                type="url"
-                label="Sheet URL"
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                value={url}
-                onChange={handleChange}
-              />
-            </Grid>
-
-            <Grid item xs={6}>
-              <TextField
-                id="outlined-select-currency"
-                select
-                label="Оберіть місто"
-                onChange={handleChange}
-                variant="outlined"
-                margin="normal"
-                fullWidth
-              >
-                {currencies.map(option => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </Grid>
-          </Grid>
-
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <Grid container spacing={3}>
+              <Grid item md={6} xs={12}>
+                <TextField
+                  required
+                  name="url"
+                  type="url"
+                  label="Sheet URL"
+                  variant="outlined"
+                  // margin="normal"
+                  fullWidth
+                  value={url}
+                  onChange={handleChange}
+                />
+              </Grid>
+
+              <Grid item md={6} xs={12}>
+                <TextField
+                  id="outlined-select-currency"
+                  select
+                  label="Оберіть місто"
+                  onChange={handleChange}
+                  variant="outlined"
+                  // margin="normal"
+                  fullWidth
+                >
+                  {currencies.map(option => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+
               <Grid item xs={6}>
                 <KeyboardDatePicker
                   autoOk
                   format="dd.MM"
-                  margin="normal"
+                  // margin="normal"
                   label="Дата початку"
                   inputVariant="outlined"
                   value={dateFrom}
@@ -134,7 +132,7 @@ export function SelectForm() {
                 <KeyboardDatePicker
                   autoOk
                   format="dd.MM"
-                  margin="normal"
+                  // margin="normal"
                   label="Дата кінця"
                   inputVariant="outlined"
                   minDate={dateFrom}
@@ -143,19 +141,18 @@ export function SelectForm() {
                   fullWidth
                 />
               </Grid>
+              <Grid item xs={12}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  disabled={loading}
+                >
+                  Порахувати
+                </Button>
+              </Grid>
             </Grid>
           </MuiPickersUtilsProvider>
-
-          <FormControl>
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              disabled={loading}
-            >
-              Порахувати
-            </Button>
-          </FormControl>
         </CardContent>
       </Card>
     </form>
