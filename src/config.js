@@ -12,3 +12,26 @@ export const columnIndexes = {
   windSpeed: 5,
   cityName: 5,
 };
+
+export const currencies = [
+  {
+    value:
+      'https://docs.google.com/spreadsheets/d/1qcC9ww0yufzxoGVCGE41XsIQ8N3oEw4ZG7lzrALzh0Q/edit#gid=1169870032',
+    label: 'New York',
+  },
+  {
+    value:
+      'https://docs.google.com/spreadsheets/d/1OKsZdcYz8Joe60L5Rkid31jdzVDg9oyF6CxTO1ADOGs/edit#gid=1409575944',
+    label: 'Palm Springs',
+  },
+  {
+    value:
+      'https://docs.google.com/spreadsheets/d/1E7SMdsmd6-bR3bI0CAdc5L_QMrNPEK3JIW5XTQJ0TPM/edit#gid=811480449',
+    label: 'Selawik',
+  },
+  {
+    value:
+      'https://docs.google.com/spreadsheets/d/1zfhNz2immYrnEjd-7yC-6KK7YpK7oWaAVgibv9C0GiQ/edit#gid=1233604839',
+    label: 'Lihue Airport',
+  },
+];
