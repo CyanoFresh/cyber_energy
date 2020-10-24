@@ -31,7 +31,7 @@ export function Tab1() {
           <CartesianGrid strokeDasharray="3 3" />
           <Tooltip />
           <Legend />
-          <Line dataKey="temperature" stroke="#82ca9d" dot={false} unit="°C" />
+          <Line dataKey="temperature" stroke="#2962ff" dot={false} unit="°C" />
         </LineChart>
       </ResponsiveContainer>
 
@@ -42,11 +42,11 @@ export function Tab1() {
       <ResponsiveContainer width="100%" height={300}>
         <BarChart data={data.temperatureToHours}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="temperature" unit="°C" />
+          <XAxis dataKey="temperature" />
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="hours" fill="#8884d8" />
+          <Bar dataKey="hours" fill="#48D1CC" />
         </BarChart>
       </ResponsiveContainer>
 
@@ -65,11 +65,11 @@ export function Tab1() {
       <ResponsiveContainer width="100%" height={300}>
         <BarChart data={data.speedToHours}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="speed" unit="m/s" />
+          <XAxis dataKey="speed" />
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="hours" fill="#8884d8" />
+          <Bar dataKey="hours" fill="#ec407a" />
         </BarChart>
       </ResponsiveContainer>
 
@@ -81,10 +81,10 @@ export function Tab1() {
         <BarChart data={data.solarToDate}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="date" />
-          <YAxis unit="W/m2" />
+          <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="solar" fill="#8884d8" />
+          <Bar dataKey="solar" fill="#00bcd4" />
         </BarChart>
       </ResponsiveContainer>
 
@@ -99,7 +99,7 @@ export function Tab1() {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="hours" fill="#8884d8" />
+          <Bar dataKey="hours" fill="#c51162" />
         </BarChart>
       </ResponsiveContainer>
     </>

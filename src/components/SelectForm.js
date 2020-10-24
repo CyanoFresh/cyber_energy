@@ -8,13 +8,14 @@ import DateFnsUtils from '@date-io/date-fns';
 import { Button, CardContent } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import { API_KEY, API_URL } from '../config';
+import { API_KEY, API_URL, currencies } from '../config';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { buildRangesUrl, getSheetIdFromUrl } from '../utils/functions';
 import { parseData } from '../utils/parse';
 import { DataContext } from './dataContext';
 import FormControl from '@material-ui/core/FormControl';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -24,9 +25,12 @@ const useStyles = makeStyles(theme => ({
 
 export function SelectForm() {
   const classes = useStyles();
+  const [url, setUrl] = useState('');
   const [dateFrom, setDateFrom] = useState(new Date('1980-01-01T00:00:00'));
   const [dateTo, setDateTo] = useState(new Date('1980-01-07T00:00:00'));
   const { setData, loading, setLoading, setError } = useContext(DataContext);
+
+  const handleChange = event => setUrl(event.target.value);
 
   const onSubmit = async e => {
     e.preventDefault();
@@ -78,15 +82,39 @@ export function SelectForm() {
             Введіть дані:
           </Typography>
 
-          <TextField
-            required
-            name="url"
-            type="url"
-            label="Sheet URL"
-            variant="outlined"
-            margin="normal"
-            fullWidth
-          />
+          <Grid container spacing={3}>
+            <Grid item xs={6}>
+              <TextField
+                required
+                name="url"
+                type="url"
+                label="Sheet URL"
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                value={url}
+                onChange={handleChange}
+              />
+            </Grid>
+
+            <Grid item xs={6}>
+              <TextField
+                id="outlined-select-currency"
+                select
+                label="Оберіть місто"
+                onChange={handleChange}
+                variant="outlined"
+                margin="normal"
+                fullWidth
+              >
+                {currencies.map(option => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Grid>
+          </Grid>
 
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <Grid container spacing={3}>
