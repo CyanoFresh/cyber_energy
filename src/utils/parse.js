@@ -161,5 +161,10 @@ function mapData(data) {
   };
 }
 
-export const parseData = (data, dateFrom, dateTo) =>
-  mapData(flattenData(filterData(data, dateFrom, dateTo)));
+export const parseData = (data, dateFrom, dateTo) => {
+  const result = mapData(flattenData(filterData(data, dateFrom, dateTo)));
+
+  result.cityName = data.valueRanges[columnIndexes.cityName].values[0];
+
+  return result;
+};

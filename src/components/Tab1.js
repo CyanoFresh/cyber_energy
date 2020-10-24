@@ -20,6 +20,10 @@ export function Tab1() {
 
   return (
     <>
+      <Typography variant="h5" gutterBottom>
+        {data.cityName}
+      </Typography>
+
       <Typography variant="h6" gutterBottom>
         Температурні умови
       </Typography>
@@ -57,7 +61,7 @@ export function Tab1() {
         <WindRose data={data.windRose} />
       </ResponsiveContainer>
       <strong>Штиль:</strong>{' '}
-      {data.windStats.calm + ' ' + data.windStats.calmPercent + '%'}
+      {data.windStats.calm + ' (' + data.windStats.calmPercent + ')%'}
       <Typography variant="h6" gutterBottom>
         Тривалість режимів вітрової активності
       </Typography>
