@@ -8,14 +8,13 @@ import DateFnsUtils from '@date-io/date-fns';
 import { Button, CardContent } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import { API_KEY, API_URL, currencies } from '../config';
+import { API_KEY, API_URL, cityLinks } from '../config';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import { buildRangesUrl, getSheetIdFromUrl } from '../utils/functions';
 import { parseData } from '../utils/parse';
 import { DataContext } from './dataContext';
-import FormControl from '@material-ui/core/FormControl';
 import MenuItem from '@material-ui/core/MenuItem';
+import CardHeader from '@material-ui/core/CardHeader';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -35,10 +34,11 @@ export function SelectForm() {
   const onSubmit = async e => {
     e.preventDefault();
 
-    const url = e.target.url.value;
-    const sheetId = getSheetIdFromUrl(url);
+    const sheetId = getSheetIdFromUrl(e.target.url.value);
 
-    if (!sheetId) return setError('Неправильне посилання');
+    if (!sheetId) {
+      return setError('Неправильне посилання');
+    }
 
     setLoading(true);
     setError(false);
@@ -64,7 +64,7 @@ export function SelectForm() {
       const parsedData = parseData(data, dateFrom, dateTo);
       const t1 = performance.now();
 
-      console.log('Calculations took ' + (t1 - t0) + ' milliseconds.');
+      console.log('Calculations took ' + (t1 - t0) + ' ms');
 
       setData(parsedData);
       setLoading(false);
@@ -77,13 +77,11 @@ export function SelectForm() {
   return (
     <form onSubmit={onSubmit}>
       <Card className={classes.root}>
-        <CardContent>
-          <Typography variant="h5" component="h2" gutterBottom>
-            Введіть дані:
-          </Typography>
+        <CardHeader title="Введіть дані" />
 
+        <CardContent>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <Grid container spacing={3}>
+            <Grid container spacing={2}>
               <Grid item md={6} xs={12}>
                 <TextField
                   required
@@ -91,7 +89,6 @@ export function SelectForm() {
                   type="url"
                   label="Sheet URL"
                   variant="outlined"
-                  // margin="normal"
                   fullWidth
                   value={url}
                   onChange={handleChange}
@@ -103,12 +100,12 @@ export function SelectForm() {
                   id="outlined-select-currency"
                   select
                   label="Оберіть місто"
+                  defaultValue=""
                   onChange={handleChange}
                   variant="outlined"
-                  // margin="normal"
                   fullWidth
                 >
-                  {currencies.map(option => (
+                  {cityLinks.map(option => (
                     <MenuItem key={option.value} value={option.value}>
                       {option.label}
                     </MenuItem>
@@ -120,7 +117,6 @@ export function SelectForm() {
                 <KeyboardDatePicker
                   autoOk
                   format="dd.MM"
-                  // margin="normal"
                   label="Дата початку"
                   inputVariant="outlined"
                   value={dateFrom}
@@ -128,11 +124,11 @@ export function SelectForm() {
                   fullWidth
                 />
               </Grid>
+
               <Grid item xs={6}>
                 <KeyboardDatePicker
                   autoOk
                   format="dd.MM"
-                  // margin="normal"
                   label="Дата кінця"
                   inputVariant="outlined"
                   minDate={dateFrom}
@@ -141,6 +137,7 @@ export function SelectForm() {
                   fullWidth
                 />
               </Grid>
+
               <Grid item xs={12}>
                 <Button
                   type="submit"

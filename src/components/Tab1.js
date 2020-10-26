@@ -8,7 +8,6 @@ import {
   XAxis,
   YAxis,
   ResponsiveContainer,
-  Label,
 } from 'recharts';
 import React, { useContext } from 'react';
 import Typography from '@material-ui/core/Typography';
@@ -75,7 +74,7 @@ export function Tab1() {
         <WindRose data={data.windRose} />
       </ResponsiveContainer>
       <strong>Штиль:</strong>{' '}
-      {data.windStats.calm + ' (' + data.windStats.calmPercent + ')%'}
+      {data.windStats.calm + ' (' + data.windStats.calmPercent + '%)'}
       <Typography variant="h6" gutterBottom>
         Тривалість режимів вітрової активності
       </Typography>
