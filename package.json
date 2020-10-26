@@ -12,10 +12,11 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "date-fns": "^2.16.1",
+    "prettier": "^2.1.2",
+    "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.0",
-    "react-windrose-chart": "^0.1.8-5",
     "recharts": "^1.8.5"
   },
   "scripts": {
@@ -25,18 +26,7 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": "react-app",
-    "rules": {
-      "no-unexpected-multiline": "off"
-    },
-    "overrides": [
-      {
-        "files": ["**/*.js?(x)"],
-        "rules": {
-          "no-unexpected-multiline": "off"
-        }
-      }
-    ]
+    "extends": "react-app"
   },
   "browserslist": {
     "production": [
@@ -49,8 +39,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "prettier": "^2.1.2"
   }
 }

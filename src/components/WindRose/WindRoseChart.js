@@ -1,6 +1,5 @@
 import React from 'react';
 import * as d3 from 'd3';
-import { AxisContainer, Axis } from './WindRoseChart.style';
 import { ChartPropTypes, ChartDefaultProps } from './PropTypes';
 
 class WindRose extends React.Component {
@@ -15,8 +14,6 @@ class WindRose extends React.Component {
   componentDidMount() {
     const { data, columns } = this.props;
     const { width, height } = this.state;
-
-    console.log(data);
 
     window.addEventListener('resize', this.updateSize);
     this.updateSize();
@@ -158,7 +155,7 @@ class WindRose extends React.Component {
         .attr(
           'transform',
           (d, i) =>
-            `translate(${outerRadius + 0},${
+            `translate(${outerRadius},${
               -outerRadius + 40 + (i - (columns.length - 1) / 2) * 20
             })`
         );
@@ -189,14 +186,19 @@ class WindRose extends React.Component {
   render() {
     const { width } = this.state;
     return (
-      <AxisContainer ref={this.axisContainerRef}>
-        <Axis
+      <div ref={this.axisContainerRef} style={{ position: 'relative' }}>
+        <svg
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+          }}
           className="axis"
           width={width}
           height={600}
           ref={this.containerRef}
         />
-      </AxisContainer>
+      </div>
     );
   }
 }
