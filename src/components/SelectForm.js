@@ -48,6 +48,7 @@ export function SelectForm() {
       const sheetData = await sheetResponse.json();
 
       if (sheetData.error) {
+        console.error(sheetData);
         return setError('Файл не знайдено');
       }
 
@@ -70,6 +71,7 @@ export function SelectForm() {
       setLoading(false);
     } catch (e) {
       setError('Неможливо завантажити дані: ' + e);
+      console.error(e);
       setLoading(false);
     }
   };

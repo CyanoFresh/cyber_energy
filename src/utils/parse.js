@@ -1,5 +1,5 @@
 import { columnIndexes } from '../config';
-import { calculateWindRose } from './windRose';
+import { calculateWindRose, countPush } from './windRose';
 
 /**
  * @param {{}} data
@@ -91,7 +91,15 @@ function mapData(data) {
     direction: [],
     speed: [],
   };
-  const windStats = {
+  const windOfChange = {
+    '0-1': 0,
+    '1-2': 0,
+    '2-3': 0,
+    '3-4': 0,
+    '4-5': 0,
+    '5-6': 0,
+    '6-7': 0,
+    '7+': 0,
     calm: 0,
     calmPercent: 100,
   };
@@ -123,7 +131,9 @@ function mapData(data) {
     windRose.speed.push(speed);
 
     if (speed === 0) {
-      windStats.calm++;
+      windOfChange.calm++;
+    } else {
+      countPush(windOfChange, speed);
     }
 
     if (speedHours.hasOwnProperty(speed)) {
@@ -148,12 +158,14 @@ function mapData(data) {
     }
   });
 
-  windStats.calmPercent = Math.round((windStats.calm / data.length) * 100);
+  windOfChange.calmPercent = Math.round(
+    (windOfChange.calm / data.length) * 100
+  );
 
   return {
     temperatureToDate,
     solarToDate,
-    windStats,
+    windOfChange,
     windRose: calculateWindRose(windRose),
     temperatureToHours: hoursToArray(tmpHours, true, 'temperature'),
     speedToHours: hoursToArray(speedHours, true, 'speed'),

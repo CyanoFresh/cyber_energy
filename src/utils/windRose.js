@@ -1,60 +1,45 @@
-const countPush = (count, dir, speed) => {
-  if (speed < 1) {
-    count[dir]['0-1'] = count[dir]['0-1'] + 1;
-  } else if (speed < 2) {
-    count[dir]['1-2'] = count[dir]['1-2'] + 1;
-  } else if (speed < 3) {
-    count[dir]['2-3'] = count[dir]['2-3'] + 1;
-  } else if (speed < 4) {
-    count[dir]['3-4'] = count[dir]['3-4'] + 1;
-  } else if (speed < 5) {
-    count[dir]['5-6'] = count[dir]['5-6'] + 1;
-  } else if (speed < 6) {
-    count[dir]['6-7'] = count[dir]['6-7'] + 1;
-  } else {
-    count[dir]['7+'] = count[dir]['7+'] + 1;
-  }
-};
+export const directions = [
+  'N',
+  'NNE',
+  'NE',
+  'ENE',
+  'E',
+  'ESE',
+  'SE',
+  'SSE',
+  'S',
+  'SSW',
+  'SW',
+  'WSW',
+  'W',
+  'WNW',
+  'NW',
+  'NNW',
+];
 
-export const classifyDir = direction => {
-  const dTh = 11.25;
-  let dir;
-  if (direction >= 360 - dTh || direction < dTh) {
-    dir = 'N';
-  } else if (direction >= dTh && direction < dTh * 3) {
-    dir = 'NNE';
-  } else if (direction >= dTh * 3 && direction < dTh * 5) {
-    dir = 'NE';
-  } else if (direction >= dTh * 5 && direction < dTh * 7) {
-    dir = 'ENE';
-  } else if (direction >= dTh * 7 && direction < dTh * 9) {
-    dir = 'E';
-  } else if (direction >= dTh * 9 && direction < dTh * 11) {
-    dir = 'ESE';
-  } else if (direction >= dTh * 11 && direction < dTh * 13) {
-    dir = 'SE';
-  } else if (direction >= dTh * 13 && direction < dTh * 15) {
-    dir = 'SSE';
-  } else if (direction >= dTh * 15 && direction < dTh * 17) {
-    dir = 'S';
-  } else if (direction >= dTh * 17 && direction < dTh * 19) {
-    dir = 'SSW';
-  } else if (direction >= dTh * 19 && direction < dTh * 21) {
-    dir = 'SW';
-  } else if (direction >= dTh * 21 && direction < dTh * 23) {
-    dir = 'WSW';
-  } else if (direction >= dTh * 23 && direction < dTh * 25) {
-    dir = 'W';
-  } else if (direction >= dTh * 25 && direction < dTh * 27) {
-    dir = 'WNW';
-  } else if (direction >= dTh * 27 && direction < dTh * 29) {
-    dir = 'NW';
-  } else if (direction >= dTh * 29 && direction < dTh * 31) {
-    dir = 'NNW';
+export const getDirection = degree =>
+  directions[Math.round((degree % 360) / 22.5) % 16];
+
+/**
+ * @param {{}} count
+ * @param {Number} speed
+ */
+export const countPush = (count, speed) => {
+  if (speed < 1) {
+    count['0-1']++;
+  } else if (speed < 2) {
+    count['1-2']++;
+  } else if (speed < 3) {
+    count['2-3']++;
+  } else if (speed < 4) {
+    count['3-4']++;
+  } else if (speed < 5) {
+    count['5-6']++;
+  } else if (speed < 6) {
+    count['6-7']++;
   } else {
-    throw new Error('over 360 or under 0');
+    count['7+']++;
   }
-  return dir;
 };
 
 export const calculateWindRose = data => {
@@ -223,8 +208,8 @@ export const calculateWindRose = data => {
 
   data.direction.forEach((direction, index) => {
     const speed = data.speed[index];
-    const dir = classifyDir(direction);
-    return countPush(angleSpeedsCount, dir, speed);
+    const dir = getDirection(direction);
+    return countPush(angleSpeedsCount[dir], speed);
   });
 
   return Object.keys(angleSpeedsCount).map(angle => {

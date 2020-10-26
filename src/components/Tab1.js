@@ -13,6 +13,10 @@ import React, { useContext } from 'react';
 import Typography from '@material-ui/core/Typography';
 import { DataContext } from './dataContext';
 import WindRose from './WindRose';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Grid from '@material-ui/core/Grid';
+import { CardHeader } from '@material-ui/core';
 
 export function Tab1() {
   const { data } = useContext(DataContext);
@@ -70,11 +74,34 @@ export function Tab1() {
       <Typography variant="h6" gutterBottom>
         Троянда вітрів
       </Typography>
-      <ResponsiveContainer width="100%" height={500}>
-        <WindRose data={data.windRose} />
-      </ResponsiveContainer>
-      <strong>Штиль:</strong>{' '}
-      {data.windStats.calm + ' (' + data.windStats.calmPercent + '%)'}
+      <Grid container>
+        <Grid item md={9} xs={12}>
+          <ResponsiveContainer width="100%" height={500}>
+            <WindRose data={data.windRose} />
+          </ResponsiveContainer>
+        </Grid>
+        <Grid item md={3} xs={12}>
+          <Card variant="outlined">
+            <CardContent>
+              <Typography variant="h5" gutterBottom>
+                Змінні вітри
+              </Typography>
+              {Object.entries(data.windOfChange)
+                .slice(0, -2)
+                .map(([name, value], index) => (
+                  <div key={index}>
+                    <strong>{name} m/s:</strong> {value}
+                  </div>
+                ))}
+              <strong>Штиль:</strong>{' '}
+              {data.windOfChange.calm +
+                ' (' +
+                data.windOfChange.calmPercent +
+                '%)'}
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
       <Typography variant="h6" gutterBottom>
         Тривалість режимів вітрової активності
       </Typography>
