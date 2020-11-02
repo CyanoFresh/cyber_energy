@@ -2,6 +2,20 @@ import { columnIndexes } from '../config';
 import { calculateWindRose, countPush } from './windRose';
 
 /**
+ * Check if date is in range not counting year
+ * @param {Date} date
+ * @param {Date} dateFrom
+ * @param {Date} dateTo
+ * @return {boolean}
+ */
+export const isDateInRange = (date, dateFrom, dateTo) => {
+  dateFrom.setFullYear(date.getFullYear());
+  dateTo.setFullYear(date.getFullYear());
+
+  return date >= dateFrom && date <= dateTo;
+};
+
+/**
  * @param {{}} data
  * @param {Date} dateFrom
  * @param {Date} dateTo
@@ -11,18 +25,7 @@ function filterData(data, dateFrom, dateTo) {
   const matchedIndexes = [];
 
   data.valueRanges[0].values.forEach((row, rowIndex) => {
-    const date = row[0];
-    const parts = date.split('/');
-    const month = +parts[0] - 1;
-    const day = +parts[1];
-
-    const inRange =
-      month >= dateFrom.getMonth() &&
-      month <= dateTo.getMonth() &&
-      day >= dateFrom.getDate() &&
-      day <= dateTo.getDate();
-
-    if (inRange) {
+    if (isDateInRange(new Date(row[0]), dateFrom, dateTo)) {
       matchedIndexes.push(rowIndex);
     }
   });
