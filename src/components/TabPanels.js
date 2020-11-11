@@ -3,6 +3,7 @@ import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { Tab1 } from './Tab1';
+import { Tab2 } from './Tab2';
 import Box from '@material-ui/core/Box';
 import { DataContext } from './dataContext';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -58,7 +59,7 @@ export function TabPanels() {
         <Tab1 />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Tab Two
+        <Tab2 />
       </TabPanel>
       <TabPanel value={value} index={2}>
         Tab Three
