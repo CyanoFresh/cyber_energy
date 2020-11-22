@@ -181,7 +181,7 @@ export function Tab2() {
 
       <Grid container spacing={2} alignItems="center">
         <Grid item md={4} xs={12}>
-          <Typography>Кількість прийомів душу</Typography>
+          <Typography>Кількість прийомів ванни</Typography>
         </Grid>
         <Grid item md={6} xs={12}>
           <TextField
