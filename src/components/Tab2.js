@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Typography from '@material-ui/core/Typography';
 import { DataContext } from './dataContext';
 import Grid from '@material-ui/core/Grid';
@@ -6,26 +6,27 @@ import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import MenuItem from '@material-ui/core/MenuItem';
 
+const initialState = {
+  q: 250,
+  S: 300,
+  n: 2,
+  tInputWater: 15,
+  tTargetB: 85,
+  tShower: 40,
+  countShower: 2,
+  tBath: 50,
+  countBath: 2,
+  calcVariant: '1',
+  tankHeatTime: 20,
+  tankPower: 2,
+  tInsideHouse: 20,
+};
+
 export function Tab2() {
   const { data } = useContext(DataContext);
-  const [values, setValues] = React.useState({
-    q: 250,
-    S: 300,
-    n: 2,
-    tInputWater: 15,
-    tTargetB: 85,
-    tShower: 40,
-    countShower: 2,
-    tBath: 50,
-    countBath: 2,
-    calcVariant: '1',
-    tankHeatTime: 20,
-    tankPower: 2,
-    tInsideHouse: 20,
-  });
-  const handleChange = event => {
+  const [values, setValues] = useState(initialState);
+  const handleChange = event =>
     setValues({ ...values, [event.target.name]: event.target.value });
-  };
 
   return (
     <>

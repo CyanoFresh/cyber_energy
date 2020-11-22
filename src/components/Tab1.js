@@ -16,7 +16,6 @@ import WindRose from './WindRose';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
-import { CardHeader } from '@material-ui/core';
 
 export function Tab1() {
   const { data } = useContext(DataContext);
@@ -26,9 +25,11 @@ export function Tab1() {
       <Typography variant="h5" gutterBottom>
         {data.cityName}
       </Typography>
+
       <Typography variant="h6" gutterBottom>
         Температурні умови
       </Typography>
+
       <ResponsiveContainer width="100%" height={400}>
         <LineChart data={data.temperatureToDate}>
           <XAxis dataKey="date" />
@@ -46,9 +47,11 @@ export function Tab1() {
           <Line dataKey="temperature" stroke="#2962ff" dot={false} unit="°C" />
         </LineChart>
       </ResponsiveContainer>
+
       <Typography variant="h6" gutterBottom>
         Тривалість температурних режимів
       </Typography>
+
       <ResponsiveContainer width="100%" height={300}>
         <BarChart data={data.temperatureToHours}>
           <CartesianGrid strokeDasharray="3 3" />
@@ -71,9 +74,11 @@ export function Tab1() {
           <Bar dataKey="hours" fill="#48D1CC" />
         </BarChart>
       </ResponsiveContainer>
+
       <Typography variant="h6" gutterBottom>
         Троянда вітрів
       </Typography>
+
       <Grid container>
         <Grid item md={9} xs={12}>
           <ResponsiveContainer width="100%" height={500}>
@@ -102,9 +107,11 @@ export function Tab1() {
           </Card>
         </Grid>
       </Grid>
+
       <Typography variant="h6" gutterBottom>
         Тривалість режимів вітрової активності
       </Typography>
+
       <ResponsiveContainer width="100%" height={300}>
         <BarChart data={data.speedToHours}>
           <CartesianGrid strokeDasharray="3 3" />
@@ -127,6 +134,7 @@ export function Tab1() {
           <Bar dataKey="hours" fill="#ec407a" />
         </BarChart>
       </ResponsiveContainer>
+
       <Typography variant="h6" gutterBottom>
         Інтенсивність сонячної інсоляції
       </Typography>
@@ -145,9 +153,11 @@ export function Tab1() {
           <Bar dataKey="solar" fill="#00bcd4" />
         </BarChart>
       </ResponsiveContainer>
+
       <Typography variant="h6" gutterBottom>
         Тривалість режимів сонячної активності
       </Typography>
+
       <ResponsiveContainer width="100%" height={300}>
         <BarChart data={data.wattToHours}>
           <CartesianGrid strokeDasharray="3 3" />
