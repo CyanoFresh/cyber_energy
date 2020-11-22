@@ -42,3 +42,5 @@ export const cityLinks = [
     label: 'Lihue Airport',
   },
 ];
+
+export const ExternalT = -22;
