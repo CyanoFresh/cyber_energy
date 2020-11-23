@@ -25,7 +25,18 @@ const InputFields = () => {
 
   return (
     <>
-      <InputField title="Питомі тепловтрати будівлі" name="q" unit="Вт/м²" />
+      <InputField
+        title="Питомі тепловтрати будівлі"
+        name="q"
+        unit="Вт/м²"
+        TextFieldProps={{
+          type: 'number',
+          inputProps: {
+            min: 0,
+            max: 500,
+          },
+        }}
+      />
       <InputField title="Опалювальна площа будинку" name="S" unit="м²" />
       <InputField title="Кількість людей" name="n" />
       <InputField
@@ -189,9 +200,13 @@ const ResultFields = () => {
           />
           <Tooltip />
           <Legend />
-          <Bar dataKey="price" unit=" грн." name="Вартість" fill="#8884d8" />
+          <Bar dataKey="price" unit=" грн." name="Вартість" fill="#ec407a" />
         </BarChart>
       </ResponsiveContainer>
+
+      <Typography variant="h6" gutterBottom>
+        Найвигідніше: {result.profitable.name} ({result.profitable.price} грн)
+      </Typography>
     </>
   );
 };

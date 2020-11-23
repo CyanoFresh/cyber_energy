@@ -56,6 +56,7 @@ const Tab2Provider = ({ children }) => {
     tankHeatTime: null,
     tankPower: null,
     points: [],
+    profitable: {},
   });
   const { data } = useContext(DataContext);
 
@@ -91,7 +92,9 @@ const Tab2Provider = ({ children }) => {
     const b1 = +(-k1 * inside).toFixed(3);
     let Wsum = 0;
 
-    const points = range(ExternalT, inside + 1).map(tmp => {
+    const stop = Math.max(inside + 1, +inputValues.tInsideHouse + 1);
+
+    const points = range(ExternalT, stop).map(tmp => {
       const q = +(k1 * tmp + b1).toFixed(3);
       const q2 = +(k1 * tmp + -k1 * inputValues.tInsideHouse).toFixed(3);
 
@@ -101,7 +104,6 @@ const Tab2Provider = ({ children }) => {
       const t = point?.hours || 0;
 
       Wsum += q2 * t;
-      console.log(tmp, t, q2, Wsum);
 
       return {
         tmp,
@@ -139,6 +141,8 @@ const Tab2Provider = ({ children }) => {
       },
     ];
 
+    const profitable = [...histogram].sort((a, b) => a.price - b.price)[0];
+
     setResult(result => ({
       ...result,
       tankHeatTime,
@@ -147,6 +151,7 @@ const Tab2Provider = ({ children }) => {
       f,
       Wsum,
       histogram,
+      profitable,
     }));
   }, [inputValues, data.temperatureToHours]);
 

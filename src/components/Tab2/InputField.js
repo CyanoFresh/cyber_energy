@@ -22,6 +22,7 @@ export const InputField = ({ title, name, unit, TextFieldProps = {} }) => {
       </Grid>
       <Grid item md={6} xs={12}>
         <TextField
+          type="number"
           required
           name={name}
           variant="outlined"
