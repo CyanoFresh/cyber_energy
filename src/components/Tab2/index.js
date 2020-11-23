@@ -189,7 +189,7 @@ const ResultFields = () => {
           />
           <Tooltip />
           <Legend />
-          <Bar dataKey="price" unit=" грн." name="Вартість" fill="#8884d8" />
+          <Bar dataKey="price" unit=" грн." name="Вартість" fill="#ec407a" />
         </BarChart>
       </ResponsiveContainer>
     </>
